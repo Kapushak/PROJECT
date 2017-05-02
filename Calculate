@@ -58,7 +58,7 @@ b_ce.grid(row=1, column=2)
 b_c = Button(fr2, text='C', width=3, bd=8,  fg='blue', font='Arial 30',command=clear2)
 b_c.grid(row=1, column=3)
 
-b_sqrt = Button(fr2, text='sqrt', width=3, bd=8,  fg='blue', font='Arial 30',command=sqrt)
+b_sqrt = Button(fr2, text='√', width=3, bd=8,  fg='blue', font='Arial 30',command=sqrt)
 b_sqrt.grid(row=1, column=4)
 
 b_p_m = Button(fr2, text='^', width=3, bd=8,  fg='blue', font='Arial 30',command=lambda:number_button('**'))
