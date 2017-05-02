@@ -45,7 +45,7 @@ fr1.pack(side=TOP)
 fr2=Frame(root)
 fr2.pack(side=LEFT,anchor=N,pady=5,padx=5)
 
-text1=Entry(fr1,width=17,font='Arial 30',justify='right',bd=20,insertwidth=-1)
+text1=Entry(fr1,width=18,font='Arial 30',justify='right',bd=20,insertwidth=-1)
 text1.pack(side=RIGHT,anchor=N)
 
 #1
