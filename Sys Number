@@ -1,0 +1,69 @@
+from tkinter import*
+from tkinter.ttk import *
+
+root=Tk()
+root.title('Калькулятор СС')
+root.resizable(0,0)
+
+#Функции
+
+def is_x_ten(x):
+    """Перевод из любой системы счисления в десятичную"""
+    pass
+
+def is_ten_x(num,base):
+    if num>=base:
+        result = ''
+        
+        while num >= base:
+            o=num % base
+            result += str(o)
+            num =num// base
+            
+        result = str(num)+result
+        return int(result)
+    else:
+        return num
+
+def iquel():
+    base1=int(com1.get())
+    base2=int(com2.get())
+    number=int(ent.get())
+
+    if base1==base2:
+        r.set(str(number))
+    elif base1==10 and base2 !=10:
+        r.set(str(is_ten_x(number,base2)))
+
+#Виджеты
+ 
+fr1 = Frame(root)
+fr1.grid(row = 1, column = 1)
+
+t1 = Label(fr1, text = 'Выберите исходную СС')
+t1.grid(row = 1, column = 1)
+
+com1 = Combobox(fr1, values = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16])
+com1.grid(row = 1, column = 2,pady=5)
+
+t2 = Label(fr1, text = 'Выберите конечную СС')
+t2.grid(row = 2, column = 1,pady=15)
+
+com2 = Combobox(fr1, values = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16])
+com2.grid(row = 2, column = 2)
+
+t3 = Label(fr1, text = 'Выберите число')
+t3.grid(row = 3, column = 1)
+
+ent = Entry(fr1)
+ent.grid(row = 3, column = 2)
+
+btn = Button(fr1, text = 'Перевод',command=iquel)
+btn.grid(row = 4, column = 1, pady = 20)
+
+r=StringVar()
+
+res=Label(fr1,textvariable=r,font=' Arial 30')
+res.grid(row=4,column=2,pady = 40)
+
+root.mainloop()
