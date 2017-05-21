@@ -11,12 +11,24 @@ by=-3
 px=0
 pxl=-3
 pxr=3
+t=35
+number2=0
+number1=0
 
+#Canvas
+
+canv=Canvas(root,width=800,height=600,bg='white')
+canv.pack(fill=BOTH,expand=1)
+
+ball=canv.create_oval(50,50,75,75,fill='red',width=0)
+paddle=canv.create_rectangle(350,500,450,515,fill='blue',width=0)
+Level=canv.create_text(400,50,text='Уровень 1',font='Arial 20')
+Number=canv.create_text(400,550,text='Счетчик ударов:'+str(number2),font='Arial 20')
 
 #Def
 
 def move_ball():
-    global bx,by,r,ball
+    global bx,by,r,ball,number1,number2,t,Number,Level
     canv.move(ball,bx,by)
     pos=canv.coords(ball)
     if pos[1]<=0:
@@ -27,11 +39,37 @@ def move_ball():
         bx=3
     elif pos[2]>=800:
         bx=-3
+    "Счетчик ударов"
+    if pos[0]<=0 or pos[1]<=0 or pos[2]>=800:
+        number1+=1
     if hit_paddle(pos)==True:
         by=-3
-    root.after(15,move_ball)
-
-root.after(15,move_ball)
+    'Темп движения'
+    if number2==5:
+        t=25
+    elif number2==10:
+        t=17
+    elif number2==15:
+        t=10
+    if number1>number2:
+        number2=number1
+        canv.delete(Number)
+        Number=canv.create_text(400,550,text='Счетчик ударов:'+str(number2),font='Arial 20')
+    root.after(t,move_ball)
+    'Уровни'
+    if number2==5:
+        canv.delete(Level)
+        Level=canv.create_text(400,50,text='Уровень 2',font='Arial 20')
+    elif number2==10:
+        canv.delete(Level)
+        Level=canv.create_text(400,50,text='Уровень 3',font='Arial 20')
+    'Конец игры'
+    if pos[3]>=600:
+       canv.create_text(400,250,text='Конец игры',fill='red',font='Arial 40')
+       bx=0
+       by=0
+    
+root.after(t,move_ball)
 
 def hit_paddle(pos):
     paddle_pos=canv.coords(paddle)
@@ -55,16 +93,7 @@ def move_paddle(event):
     if pos[2]>=800:
         pxr=0
     else:
-        pxr=12    
-
-#Canvas
-
-canv=Canvas(root,width=800,height=600,bg='white')
-canv.pack(fill=BOTH,expand=1)
-
-ball=canv.create_oval(50,50,100,100,fill='red',width=0)
-paddle=canv.create_rectangle(350,500,450,515,fill='blue',width=0)
-Level=canv.create_text(400,50,text='Уровень 1',font='Arial 20')
+        pxr=12
 
 canv.bind_all('<Left>',move_paddle)
 canv.bind_all('<Right>',move_paddle)
