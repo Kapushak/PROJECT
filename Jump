@@ -25,24 +25,24 @@ paddle=canv.create_rectangle(350,500,450,515,fill='blue',width=0)
 Level=canv.create_text(400,50,text='Уровень 1',font='Arial 20')
 Number=canv.create_text(400,550,text='Счетчик ударов:'+str(number2),font='Arial 20')
 
-#Def
-
+#Def   
+ 
 def move_ball():
-    global bx,by,r,ball,number1,number2,t,Number,Level
+    global bx,by,ball,number1,number2,t,Number,Level,pos1,pos2
     canv.move(ball,bx,by)
-    pos=canv.coords(ball)
-    if pos[1]<=0:
+    pos1=canv.coords(ball)
+    if pos1[1]<=0:
         by=3
-    elif pos[3]>=600:
+    elif pos1[3]>=600:
         by=-3
-    if pos[0]<=0:
+    if pos1[0]<=0:
         bx=3
-    elif pos[2]>=800:
+    elif pos1[2]>=800:
         bx=-3
     "Счетчик ударов"
-    if pos[0]<=0 or pos[1]<=0 or pos[2]>=800:
+    if pos1[0]<=0 or pos1[1]<=0 or pos1[2]>=800:
         number1+=1
-    if hit_paddle(pos)==True:
+    if hit_paddle(pos1)==True:
         by=-3
     'Темп движения'
     if number2==5:
@@ -64,36 +64,41 @@ def move_ball():
         canv.delete(Level)
         Level=canv.create_text(400,50,text='Уровень 3',font='Arial 20')
     'Конец игры'
-    if pos[3]>=600:
+    if pos1[3]>=600:
        canv.create_text(400,250,text='Конец игры',fill='red',font='Arial 40')
+       #canv.create_text(400,300,text='Начать заново',fill='green',font='Arial 20')
        bx=0
        by=0
+       #canv.bind('<1>',new_game)
     
 root.after(t,move_ball)
 
 def hit_paddle(pos):
     paddle_pos=canv.coords(paddle)
-    if pos[2]>=paddle_pos[0] and pos[0]<=paddle_pos[2]:
-        if pos[3]>=paddle_pos[1] and pos[3]<=paddle_pos[3]:
+    if pos1[2]>=paddle_pos[0] and pos1[0]<=paddle_pos[2]:
+        if pos1[3]>=paddle_pos[1] and pos1[3]<=paddle_pos[3]:
             return True
     return False
 
 def move_paddle(event):
-    global px,pxl,pxr
+    global px,pxl,pxr,pos1,pos2
     canv.move(paddle,px,0)
-    pos=canv.coords(paddle)
+    pos2=canv.coords(paddle)
     if event.keysym=='Right':
         canv.move(paddle,pxr,0)
     else:
         canv.move(paddle,pxl,0)
-    if pos[0]<=0:
+    if pos2[0]<=0:
         pxl=0
     else:
         pxl=-12
-    if pos[2]>=800:
+    if pos2[2]>=800:
         pxr=0
     else:
         pxr=12
+    if pos1[3]>=600:
+        pxr=0
+        pxl=0
 
 canv.bind_all('<Left>',move_paddle)
 canv.bind_all('<Right>',move_paddle)
