@@ -25,7 +25,27 @@ paddle=canv.create_rectangle(350,500,450,515,fill='blue',width=0)
 Level=canv.create_text(400,50,text='Уровень 1',font='Arial 20')
 Number=canv.create_text(400,550,text='Счетчик ударов:'+str(number2),font='Arial 20')
 
-#Def   
+#Def
+
+'''
+def new_game(event):
+    canv.delete(ALL)
+    global bx,by,px,pxl,pxr,pos1,pos2,t,number1,number2
+    bx=-3
+    by=-3
+    px=0
+    pxl=-3
+    pxr=3
+    t=35
+    number2=0
+    number1=0
+    ball==canv.create_oval(50,50,75,75,fill='red',width=0)
+    paddle=canv.create_rectangle(350,500,450,515,fill='blue',width=0)
+    Level=canv.create_text(400,50,text='Уровень 1',font='Arial 20')
+    Number=canv.create_text(400,550,text='Счетчик ударов:'+str(number2),font='Arial 20')
+    pos1=canv.coords(ball)
+    pos2=canv.coords(paddle)
+'''
  
 def move_ball():
     global bx,by,ball,number1,number2,t,Number,Level,pos1,pos2
@@ -40,10 +60,11 @@ def move_ball():
     elif pos1[2]>=800:
         bx=-3
     "Счетчик ударов"
-    if pos1[0]<=0 or pos1[1]<=0 or pos1[2]>=800:
-        number1+=1
+    '''if pos1[0]<=0 or pos1[1]<=0 or pos1[2]>=800:
+        number1+=1'''
     if hit_paddle(pos1)==True:
         by=-3
+        number1+=1
     'Темп движения'
     if number2==5:
         t=25
@@ -51,6 +72,8 @@ def move_ball():
         t=17
     elif number2==15:
         t=10
+    elif number2==25:
+        t=8
     if number1>number2:
         number2=number1
         canv.delete(Number)
@@ -63,10 +86,16 @@ def move_ball():
     elif number2==10:
         canv.delete(Level)
         Level=canv.create_text(400,50,text='Уровень 3',font='Arial 20')
+    elif number2==15:
+        canv.delete(Level)
+        Level=canv.create_text(400,50,text='Уровень 4',font='Arial 20')
+    elif number2==25:
+        canv.delete(Level)
+        Level=canv.create_text(400,50,text='Уровень 5',font='Arial 20')
     'Конец игры'
     if pos1[3]>=600:
        canv.create_text(400,250,text='Конец игры',fill='red',font='Arial 40')
-       #canv.create_text(400,300,text='Начать заново',fill='green',font='Arial 20')
+       #canv.create_text(400,350,text='Начать заново',fill='green',font='Arial 25')
        bx=0
        by=0
        #canv.bind('<1>',new_game)
